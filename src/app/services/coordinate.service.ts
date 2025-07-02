@@ -28,7 +28,7 @@ export class CoordinateService {
   }
 
   compare(coordinate1: Coordinate, coordinate2: Coordinate, checkDistance: number): Observable<boolean> {
-    return this.httpClient.post<boolean>('http://localhost:8080/coordinates/check', {
+    return this.httpClient.post<boolean>('http://localhost:8080/coordinates/check-distance', {
       coordinate1,
       coordinate2,
       distanceToCheck: checkDistance

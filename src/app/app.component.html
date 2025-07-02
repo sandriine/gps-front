@@ -15,5 +15,22 @@
     <button [disabled]="!coordinateForm.valid" (click)="create()" mat-flat-button>Créer une position gps</button>
     <button (click)="findAllCoordinate()" mat-flat-button>Voir la liste</button>
   </div>
-
+  <div>
+    <div class="list">
+      <mat-selection-list #gpscoordinates>
+        <ng-container *ngFor="let coordinate of coordinates">
+          <mat-list-option (selectedChange)="onCheckboxChange(coordinate)"
+                           [disabled]="!isSelected(coordinate) && selectedCoordinates.length >= 2"
+            >{{coordinate.latitude}},{{coordinate.longitude}}</mat-list-option>
+        </ng-container>
+      </mat-selection-list>
+    </div>
+    <div class="button-container">
+      <ng-container *ngIf="coordinates.length > 0">
+        <button (click)="compare()" [disabled]="gpscoordinates.selectedOptions.selected.length !== 2" mat-flat-button>Comparer</button>
+        <button (click)="delete()" [disabled]="gpscoordinates.selectedOptions.selected.length !== 1" mat-flat-button>Supprimer</button>
+        A plus de 10km: {{result}}
+      </ng-container>
+    </div>
+  </div>
 </div>

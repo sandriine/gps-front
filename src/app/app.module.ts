@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import {MatFormField} from "@angular/material/form-field";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {MatFormField} from "@angular/material/form-field";
     ReactiveFormsModule,
     MatButtonModule,
     HttpClientModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

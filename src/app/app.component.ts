@@ -15,6 +15,7 @@ export class AppComponent {
     longitude: new FormControl(null, {validators: Validators.required}),
   });
   selectedCoordinates: Coordinate[] = [];
+  result: boolean = false;
 
   constructor(
     private coordinateService: CoordinateService
@@ -22,7 +23,7 @@ export class AppComponent {
   }
 
   findAllCoordinate() {
-    this.coordinateService.findAll().subscribe(data => console.log(data));
+    this.coordinateService.findAll().subscribe(data => this.coordinates = data);
   }
 
   create() {
@@ -36,13 +37,15 @@ export class AppComponent {
   }
 
   compare() {
-    this.coordinateService.compare(this.selectedCoordinates[0], this.selectedCoordinates[1], 10);
+    this.coordinateService.compare(this.selectedCoordinates[0], this.selectedCoordinates[1], 10).subscribe(result => this.result = result);
   }
 
   onCheckboxChange(coordinate: Coordinate) {
+    console.log(coordinate)
+    console.log(this.isSelected(coordinate))
     if(this.isSelected(coordinate)) {
       this.selectedCoordinates = this.selectedCoordinates.filter(p => p.id !== coordinate.id);
-    }else if(this.selectedCoordinates.length > 2) {
+    }else if(this.selectedCoordinates.length < 2) {
       this.selectedCoordinates.push(coordinate)
     }
   }
