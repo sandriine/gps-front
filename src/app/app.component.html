@@ -1,13 +1,14 @@
 <div class="container">
   <div class="container-actions">
     <form [formGroup]="coordinateForm" class="form">
-      <mat-form-field>
+      <mat-form-field appearance="fill">
         <mat-label>Latitude</mat-label>
-        <input formControlName="latitude" type="number" matInput>
+        <input matInput type="number" formControlName="latitude" />
       </mat-form-field>
-      <mat-form-field>
+
+      <mat-form-field appearance="fill">
         <mat-label>Longitude</mat-label>
-        <input formControlName="longitude" type="number" matInput>
+        <input matInput type="number" formControlName="longitude" />
       </mat-form-field>
     </form>
 

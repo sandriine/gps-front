@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 24px;
+}
+
+.container-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  justify-content: center;
+  display: flex;
+  gap: 8px;
+}

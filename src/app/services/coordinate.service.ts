@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Coordinate} from "../model/Coordinate";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +16,11 @@ export class CoordinateService {
     return this.httpClient.get<Coordinate[]>('http://localhost:8080/coordinates');
   }
 
-  create(latitude: number, longitude: number): Observable<number> {
+  create(latitude: number, longitude: number): Subscription {
     return this.httpClient.post<number>('http://localhost:8080/coordinates/create', {
       latitude,
       longitude
-    });
+    }).subscribe();
   }
 
   delete(id: number) {
