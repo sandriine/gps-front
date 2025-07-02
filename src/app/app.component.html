@@ -13,7 +13,7 @@
     </form>
 
     <button [disabled]="!coordinateForm.valid" (click)="create()" mat-flat-button>Créer une position gps</button>
-    <button (click)="findAllCoordinate()" mat-flat-button>Voir la liste</button>
+
   </div>
   <div>
     <div class="list">
@@ -29,8 +29,8 @@
       <ng-container *ngIf="coordinates.length > 0">
         <button (click)="compare()" [disabled]="gpscoordinates.selectedOptions.selected.length !== 2" mat-flat-button>Comparer</button>
         <button (click)="delete()" [disabled]="gpscoordinates.selectedOptions.selected.length !== 1" mat-flat-button>Supprimer</button>
-        A plus de 10km: {{result}}
       </ng-container>
     </div>
+    <span *ngIf="showResult">A plus de 10km: {{result}}</span>
   </div>
 </div>

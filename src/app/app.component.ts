@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Coordinate} from "./model/Coordinate";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CoordinateService} from "./services/coordinate.service";
@@ -8,7 +8,7 @@ import {CoordinateService} from "./services/coordinate.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   coordinates: Coordinate[] = [];
   coordinateForm = new FormGroup({
     latitude: new FormControl(null, {validators: Validators.required}),
@@ -16,10 +16,15 @@ export class AppComponent {
   });
   selectedCoordinates: Coordinate[] = [];
   result: boolean = false;
+  showResult: boolean = false;
 
   constructor(
     private coordinateService: CoordinateService
   ) {
+  }
+
+  ngOnInit() {
+    this.findAllCoordinate();
   }
 
   findAllCoordinate() {
@@ -37,12 +42,14 @@ export class AppComponent {
   }
 
   compare() {
-    this.coordinateService.compare(this.selectedCoordinates[0], this.selectedCoordinates[1], 10).subscribe(result => this.result = result);
+    this.showResult = false;
+    this.coordinateService.compare(this.selectedCoordinates[0], this.selectedCoordinates[1], 10).subscribe(result =>
+      this.result = result);
+    this.showResult = true;
   }
 
   onCheckboxChange(coordinate: Coordinate) {
-    console.log(coordinate)
-    console.log(this.isSelected(coordinate))
+    this.showResult = false;
     if(this.isSelected(coordinate)) {
       this.selectedCoordinates = this.selectedCoordinates.filter(p => p.id !== coordinate.id);
     }else if(this.selectedCoordinates.length < 2) {
