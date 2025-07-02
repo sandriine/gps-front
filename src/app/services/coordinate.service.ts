@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Coordinate} from "../model/Coordinate";
-import {Observable, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +12,21 @@ export class CoordinateService {
     private httpClient: HttpClient
   ) { }
 
-  findAll(): Observable<Coordinate[]> {
-    return this.httpClient.get<Coordinate[]>('http://localhost:8080/coordinates');
+  private coordinatesSubject = new BehaviorSubject<Coordinate[]>([]);
+  coordinates$ = this.coordinatesSubject.asObservable();
+
+  findAll(): Subscription {
+    return this.httpClient.get<Coordinate[]>('http://localhost:8080/coordinates')
+      .subscribe(data => this.coordinatesSubject.next(data));
   }
 
   create(latitude: number, longitude: number): Subscription {
     return this.httpClient.post<number>('http://localhost:8080/coordinates/create', {
       latitude,
       longitude
-    }).subscribe();
+    }).subscribe(() => {
+      this.findAll();
+    });
   }
 
   delete(id: number) {

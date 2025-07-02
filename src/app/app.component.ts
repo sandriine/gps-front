@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Coordinate} from "./model/Coordinate";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CoordinateService} from "./services/coordinate.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import {CoordinateService} from "./services/coordinate.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  coordinates: Coordinate[] = [];
+  //coordinates: Coordinate[] = [];
   coordinateForm = new FormGroup({
     latitude: new FormControl(null, {validators: Validators.required}),
     longitude: new FormControl(null, {validators: Validators.required}),
@@ -17,17 +18,21 @@ export class AppComponent {
   selectedCoordinates: Coordinate[] = [];
   result: boolean = false;
 
+  coordinates$: Observable<Coordinate[]> | undefined;
+
   constructor(
     private coordinateService: CoordinateService
   ) {
   }
 
-  findAllCoordinate() {
-    this.coordinateService.findAll().subscribe(data => this.coordinates = data);
+  ngOnInit() {
+    this.coordinates$ = this.coordinateService.coordinates$;
+    this.coordinateService.findAll(); // Charger au départ
   }
 
   create() {
     if(this.coordinateForm.value.longitude && this.coordinateForm.value.latitude) {
+      this.selectedCoordinates = [];
       this.coordinateService.create(this.coordinateForm.value.latitude, this.coordinateForm.value.longitude)
     }
   }
