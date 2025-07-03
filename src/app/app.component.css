@@ -1,6 +1,12 @@
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 24px;
+}
+
 .container {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
   margin: 24px;
 }
@@ -25,4 +31,9 @@
   justify-content: center;
   display: flex;
   gap: 8px;
+}
+
+p {
+  margin-top: 24px;
+  font-size: medium;
 }
