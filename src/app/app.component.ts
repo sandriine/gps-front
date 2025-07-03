@@ -33,7 +33,18 @@ export class AppComponent implements OnInit {
 
   create() {
     if(this.coordinateForm.value.longitude && this.coordinateForm.value.latitude) {
-      this.coordinateService.create(this.coordinateForm.value.latitude, this.coordinateForm.value.longitude)
+      this.coordinateService.create(this.coordinateForm.value.latitude, this.coordinateForm.value.longitude).subscribe(
+        {
+          next: () => {
+            this.coordinateForm.reset();
+            this.selectedCoordinates = [];
+            this.findAllCoordinate();
+          },
+          error: err => {
+            console.error('Erreur lors de la création :', err);
+          }
+        }
+      )
     }
   }
 
